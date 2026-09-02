@@ -4,19 +4,26 @@ import dbConnect from "./DB"
 import userRouter from "./Routes/UserRoutes"
 import accountRouter from "./Routes/AccountRoute"
 import transactionRouter from "./Routes/TransactionRoute"
+import cors from 'cors'
 
 dotenv.config()
 
 const app=express()
 
 app.use(express.json())
-app.use(userRouter)
-app.use(accountRouter)
-app.use(transactionRouter)
+app.use(cors())
+app.use("/api/auth", userRouter)
+app.use("/api", accountRouter)
+app.use("/api", transactionRouter)
 
 dbConnect()
+.then(()=>{
 
+    app.listen(process.env.PORT,()=>{
+        console.log(`server is listening at ${process.env.PORT}`)
+    })
 
-app.listen(process.env.PORT,()=>{
-    console.log("sever is listening at 8000")
+})
+.catch((error)=>{
+    console.log("Database connection failed",error)
 })

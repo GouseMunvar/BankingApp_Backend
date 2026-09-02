@@ -3,8 +3,8 @@ import { RegisterUser,LoginUser } from "../Controllers/UserController"
 
 const userRouter=express.Router()
 
-userRouter.post("/registerUser",RegisterUser)
-userRouter.post("/loginUser",LoginUser)
+userRouter.post("/register",RegisterUser)
+userRouter.post("/login",LoginUser)
 
 
 export default userRouter
