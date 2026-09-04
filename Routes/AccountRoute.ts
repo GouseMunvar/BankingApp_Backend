@@ -8,7 +8,7 @@ const accountRouter=express.Router()
 
 accountRouter.post("/deposit",checkToken,depositAmount)
 accountRouter.get("/balance",checkToken,getBalance)
-accountRouter.post('withdraw',checkToken,withdrawAmount)
+accountRouter.post('/withdraw',checkToken,withdrawAmount)
 
 
 export default accountRouter

@@ -104,15 +104,17 @@ export const withdrawAmount = async (req: Request, res: Response) => {
 
 
     // Create transaction record
-    await TransactionModel.create({
-      sender: {
-        userId
-      },
-      amount,
-      type: "withdraw",
-      status: "success"
-    });
-
+    await TransactionModel.create({ 
+  sender: { 
+    userId 
+  },
+  receiver: {
+    userId
+  },
+  amount,
+  type: "withdraw",
+  status: "success"
+});
 
     return res.status(200).json({
       message: "Withdrawal successful",

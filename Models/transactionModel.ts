@@ -28,6 +28,7 @@ const transactionSchema = new mongoose.Schema<ITransaction>({
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       
+      
     }
   },
 
@@ -35,7 +36,7 @@ const transactionSchema = new mongoose.Schema<ITransaction>({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true
+     
     }
   },
 
