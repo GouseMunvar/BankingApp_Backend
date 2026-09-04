@@ -13,7 +13,7 @@ const app=express()
 app.use(express.json())
 app.use(cors())
 app.use("/api/auth", userRouter)
-app.use("/api", accountRouter)
+app.use("/api/account", accountRouter)
 app.use("/api", transactionRouter)
 
 dbConnect()
