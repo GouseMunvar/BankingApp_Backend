@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(cors())
 app.use("/api/auth", userRouter)
 app.use("/api/account", accountRouter)
-app.use("/api", transactionRouter)
+app.use("/api/account", transactionRouter)
 
 dbConnect()
 .then(()=>{

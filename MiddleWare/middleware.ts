@@ -10,7 +10,15 @@ const checkToken = (
 
   try {
 
-    const token = req.headers.authorization?.split(" ")[1];
+    const authHeader = req.headers.authorization;
+
+    console.log("Authorization Header:", authHeader);
+
+
+    const token = authHeader?.split(" ")[1];
+
+
+    console.log("Extracted Token:", token);
 
 
     if (!token) {
@@ -26,13 +34,22 @@ const checkToken = (
     );
 
 
+    console.log("Decoded User:", decoded);
+
+
     req.user = decoded;
+
+
+    console.log("User attached to request:", req.user);
 
 
     next();
 
 
   } catch (error) {
+
+    console.log("JWT Error:", error);
+
 
     return res.status(401).json({
       message: "Invalid token"
@@ -41,7 +58,6 @@ const checkToken = (
   }
 
 };
-
 
 
 export default checkToken;
