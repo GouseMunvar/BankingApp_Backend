@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 interface IUser {
   name: string;
@@ -7,41 +7,46 @@ interface IUser {
   role: string;
   accountNumber: string;
   createdAt: Date;
+  lastLogin: Date;
 }
 
 const userSchema = new mongoose.Schema<IUser>({
   name: {
     type: String,
-    required: true
+    required: true,
   },
 
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
 
   password: {
     type: String,
-    required: true
+    required: true,
   },
 
   role: {
     type: String,
-    default: "user"
+    default: "user",
   },
 
   accountNumber: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
 
   createdAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
+
+  lastLogin: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-
-export const UserModel = mongoose.model("User", userSchema);
+export const UserModel = mongoose.model<IUser>("User", userSchema);

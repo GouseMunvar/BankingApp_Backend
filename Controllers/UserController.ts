@@ -108,6 +108,10 @@ export const LoginUser = async (req: Request, res: Response) => {
       });
     }
 
+    await UserModel.findByIdAndUpdate(user._id, {
+  lastLogin: new Date(),
+});
+
 
     // 3. Create JWT token
     const token = jwt.sign(
@@ -148,7 +152,55 @@ export const LoginUser = async (req: Request, res: Response) => {
 };
 
 
+export const GetProfile = async (req: Request, res: Response) => {
+  console.log("getPrfile")
+  try {
+    const userId = (req as any).user.id;
 
+    const user = await UserModel.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    const account = await AccountModel.findOne({ userId });
+
+    if (!account) {
+      return res.status(404).json({
+        message: "Account not found",
+      });
+    }
+
+  const totalTransactions = await TransactionModel.countDocuments({
+  $or: [
+    { "sender.userId": userId },
+    { "receiver.userId": userId }
+  ]
+});
+
+    return res.status(200).json({
+      profile: {
+        name: user.name,
+        email: user.email,
+        accountNumber: user.accountNumber,
+        accountType: account.accountType,
+        balance: account.balance,
+        status: account.status,
+        memberSince: user.createdAt,
+        lastLogin: user.lastLogin,
+        totalTransactions,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
 
 
 
